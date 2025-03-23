@@ -26,9 +26,13 @@ window/stretch/aspect="expand"
 [game]
 
 player/movement_speed=96.0
-player/catch_duration=0.6
+player/catch_duration=0.4
 player/catch_width=16.0
-player/catch_buffer=0.6
+player/catch_buffer=0.4
+game/spawn_side_count=3
+game/fish_speed=4.0
+game/hazard_speed=2.0
+game/spawn_rate=6.0
 
 [gui]
 

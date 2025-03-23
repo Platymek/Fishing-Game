@@ -153,8 +153,6 @@ public class Player : Node2D
         float lowerBound = Position.x - (_catchWidth / 2);
         float upperBound = Position.x + (_catchWidth / 2);
         
-        GD.Print($"{lowerBound} < {x} < {upperBound}");
-        
         if (x < lowerBound
         ||  x > upperBound)
             _catchPosition = x;

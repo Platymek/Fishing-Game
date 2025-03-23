@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Scripts/Fish.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Sprites/fish.png" type="Texture" id=2]
+
+[node name="Fish" type="Node2D"]
+script = ExtResource( 1 )
+_flippables = NodePath("Sprites")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Fish" type="Sprite" parent="Sprites"]
+rotation = 1.57079
+texture = ExtResource( 2 )
