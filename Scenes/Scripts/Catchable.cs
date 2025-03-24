@@ -14,6 +14,8 @@ public abstract class Catchable : Node2D
             value ? -1 : 1, 
             GetNode<Node2D>(_flippables).Scale.y);
     }
+
+    public bool HasPriority = false;
     
     
     public abstract float Move();

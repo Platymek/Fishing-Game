@@ -10,6 +10,7 @@ public class Fish : Catchable
 
 	public override void OnCaught(ComboManager comboManager)
 	{
-		GD.Print("I've been caught!");
+		comboManager.Add(1);
+		QueueFree();
 	}
 }

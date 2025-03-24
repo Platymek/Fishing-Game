@@ -1,12 +1,17 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Godot.Collections;
 
 public class Player : Node2D
 {
     // exported properties //
 
     [Export] private NodePath _animationPlayer;
+    [Export] private NodePath _catchableDetector;
     private AnimationPlayer AnimationPlayer { get => GetNode<AnimationPlayer>(_animationPlayer); }
+    private Area2D CatchableDetector { get => GetNode<Area2D>(_catchableDetector); }
     
     
     // states and actions //
@@ -85,6 +90,8 @@ public class Player : Node2D
     private float _catchPosition;
     private float _requestedCatchPosition;
     
+    private HashSet<Catchable> _catchables;
+    
     
     // node methods //
 
@@ -111,6 +118,10 @@ public class Player : Node2D
         _catchTimer.OneShot = true;
         _catchTimer.WaitTime = _catchDuration;
         _catchTimer.Connect("timeout", this, "OnCatchTimerTimeout");
+
+        _catchables = new HashSet<Catchable>();
+        CatchableDetector.Connect("area_entered", this, "OnCatchableAreaEntered");
+        CatchableDetector.Connect("area_exited", this, "OnCatchableAreaExited");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -136,6 +147,31 @@ public class Player : Node2D
     void Catch()
     {
         State = States.Catching;
+        
+        if (_catchables.Count <= 0) return;
+        
+        
+        var closest = _catchables.ToArray()[0];
+        var distance = Mathf.Abs(closest.Position.x - Position.x);
+        
+        foreach (var catchable in _catchables)
+        {
+            var newDistance = Mathf.Abs(catchable.Position.x - Position.x);
+
+            if (catchable.HasPriority)
+            {
+                catchable.Catch();
+                return;
+            }
+            
+            if (newDistance < distance)
+            {
+                closest = catchable;
+                distance = newDistance;
+            }
+        }
+        
+        closest.Catch();
     }
 
     bool AllowMove()
@@ -173,5 +209,21 @@ public class Player : Node2D
     void OnCatchTimerTimeout()
     {
         State = States.Idle;
+    }
+
+    void OnCatchableAreaEntered(Area area)
+    {
+        if (area.Owner is Catchable catchable)
+        {
+            _catchables.Add(catchable);
+        }
+    }
+
+    void OnCatchableAreaExited(Area area)
+    {
+        if (area.Owner is Catchable catchable)
+        {
+            _catchables.Remove(catchable);
+        }
     }
 }

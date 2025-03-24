@@ -16,8 +16,8 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=96
-window/size/height=96
+window/size/width=192
+window/size/height=192
 window/size/test_width=768
 window/size/test_height=768
 window/stretch/mode="viewport"
@@ -25,14 +25,21 @@ window/stretch/aspect="expand"
 
 [game]
 
-player/movement_speed=96.0
+player/movement_speed=80.0
 player/catch_duration=0.4
-player/catch_width=16.0
+player/catch_width=8.0
 player/catch_buffer=0.4
 game/spawn_side_count=3
-game/fish_speed=4.0
-game/hazard_speed=2.0
-game/spawn_rate=6.0
+game/fish_speed=14.0
+game/hazard_speed=6.0
+game/spawn_rate=1.75
+combo/minimum=3
+combo/drain_duration=1.0
+combo/xp_scale=2
+combo/starting_min=3
+combo/max=10
+combo/initial_xp_requirement=8
+game/positive_to_negative_ratio=2
 
 [gui]
 
@@ -45,6 +52,10 @@ catch={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="catchables"
 
 [mono]
 
