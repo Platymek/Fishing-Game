@@ -7,21 +7,15 @@
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
-_positiveCatchables = {
-Resource( "res://Scenes/Fish.tscn" ): 1
-}
-_negativeCatchables = {
-Resource( "res://Scenes/Hazard.tscn" ): 1
-}
 _leftSpawn = NodePath("SpawnPoints/LeftSpawn")
 _rightSpawn = NodePath("SpawnPoints/RightSpawn")
-_characters = NodePath("Catchables")
+_catchablesNode = NodePath("Catchables")
 
 [node name="Background" type="Node2D" parent="."]
 position = Vector2( 48, 0 )
 
 [node name="Waves" type="Sprite" parent="Background"]
-position = Vector2( 42, 43 )
+position = Vector2( 42.5, 43 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 225, 6 )

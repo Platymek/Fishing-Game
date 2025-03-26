@@ -14,12 +14,16 @@ config/name="Fishing Game"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+SceneDictionary="*res://Scenes/SceneDictionary.tscn"
+
 [display]
 
 window/size/width=192
-window/size/height=192
-window/size/test_width=768
-window/size/test_height=768
+window/size/height=108
+window/size/test_width=1536
+window/size/test_height=864
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
@@ -32,7 +36,7 @@ player/catch_buffer=0.4
 game/spawn_side_count=3
 game/fish_speed=14.0
 game/hazard_speed=6.0
-game/spawn_rate=1.75
+game/spawn_rate=2.0
 combo/minimum=3
 combo/drain_duration=1.0
 combo/xp_scale=2

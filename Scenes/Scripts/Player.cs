@@ -158,11 +158,11 @@ public class Player : Node2D
         {
             var newDistance = Mathf.Abs(catchable.Position.x - Position.x);
 
-            if (catchable.HasPriority)
-            {
-                catchable.Catch();
-                return;
-            }
+            //if (catchable.HasPriority)
+            //{
+            //    catchable.Catch();
+            //    return;
+            //}
             
             if (newDistance < distance)
             {
