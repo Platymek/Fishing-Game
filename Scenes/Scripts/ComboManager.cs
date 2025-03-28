@@ -80,4 +80,9 @@ public class ComboManager : Node
         _drainer.Stop();
         _combo = 0;
     }
+
+    public void SetLimit(int limit, int xp)
+    {
+        _limit = limit + (int)ProjectSettings.GetSetting("game/combo/starting_min");
+    }
 }

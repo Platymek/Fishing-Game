@@ -11,7 +11,7 @@ public class Game : Node2D
 	[Export] private NodePath _leftSpawn;
 	[Export] private NodePath _rightSpawn;
 	[Export] private NodePath _catchablesNode;
-	
+
 	private ComboManager _comboManager;
 
 	public override void _Ready()
@@ -19,8 +19,11 @@ public class Game : Node2D
 		base._Ready();
 
 		GD.Randomize();
-		CreateComboManager();
-		CreateSpawner();
+		
+		var comboManager = CreateComboManager();
+		var spawner		 = CreateSpawner();
+		var progressor	 = CreateProgressor(comboManager);
+		CreateSpawnTimer(spawner);
 	}
 
 	private void CreateSpawnTimer(Spawner spawner)
@@ -33,13 +36,14 @@ public class Game : Node2D
 		spawnTimer.Start();
 	}
 
-	private void CreateComboManager()
+	private ComboManager CreateComboManager()
 	{
 		_comboManager = new ComboManager();
 		AddChild(_comboManager);
+		return _comboManager;
 	}
 
-	private void CreateSpawner()
+	private Spawner CreateSpawner()
 	{
 		var spawner = new Spawner();
 		spawner.Name = "Spawner";
@@ -49,12 +53,37 @@ public class Game : Node2D
 			GetNode<Node2D>(_rightSpawn), 
 			GetNode(_catchablesNode));
 		
-		CreateSpawnTimer(spawner);
 		spawner.SpawnCatchable(this);
+		return spawner;
+	}
+
+	private Progressor CreateProgressor(ComboManager comboManager)
+	{
+		var progressor = new Progressor();
+		progressor.Name = "Progressor";
+		AddChild(progressor);
+
+		progressor.Connect(nameof(Progressor.LeveledUp), comboManager, nameof(comboManager.SetLimit));
+		progressor.Connect(nameof(Progressor.LeveledUp), this, nameof(OnLeveledUp));
+		comboManager.Connect(nameof(ComboManager.ComboEnded), this, nameof(OnXpGained), 
+			new Array { progressor });
+		
+		return progressor;
 	}
 
 	public void OnCatchableCaught(Catchable catchable)
 	{
 		catchable.OnCaught(_comboManager);
+	}
+
+	public void OnXpGained(int combo, int xp, Progressor progressor)
+	{
+		GD.Print($"Xp Gained: {xp}");
+		progressor.GainXP(xp);
+	}
+
+	public void OnLeveledUp(int level, int xp)
+	{
+		GD.Print($"Leveled Up: {level}");
 	}
 }

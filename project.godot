@@ -44,6 +44,7 @@ combo/starting_min=3
 combo/max=10
 combo/initial_xp_requirement=8
 game/positive_to_negative_ratio=2
+game/max_level=10
 
 [gui]
 
