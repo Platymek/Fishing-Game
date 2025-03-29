@@ -8,11 +8,13 @@ using Array = Godot.Collections.Array;
 
 public class Game : Node2D
 {
+	[Signal] public delegate void GameEnded(int turns);
 	[Export] private NodePath _leftSpawn;
 	[Export] private NodePath _rightSpawn;
 	[Export] private NodePath _catchablesNode;
 
 	private ComboManager _comboManager;
+	private int _turns;
 
 	public override void _Ready()
 	{
@@ -24,6 +26,8 @@ public class Game : Node2D
 		var spawner		 = CreateSpawner();
 		var progressor	 = CreateProgressor(comboManager);
 		CreateSpawnTimer(spawner);
+
+		_turns = 0;
 	}
 
 	private void CreateSpawnTimer(Spawner spawner)
@@ -65,6 +69,8 @@ public class Game : Node2D
 
 		progressor.Connect(nameof(Progressor.LeveledUp), comboManager, nameof(comboManager.SetLimit));
 		progressor.Connect(nameof(Progressor.LeveledUp), this, nameof(OnLeveledUp));
+		progressor.Connect(nameof(Progressor.MaxLevelSurpassed), this, nameof(EndGame));
+		
 		comboManager.Connect(nameof(ComboManager.ComboEnded), this, nameof(OnXpGained), 
 			new Array { progressor });
 		
@@ -78,12 +84,20 @@ public class Game : Node2D
 
 	public void OnXpGained(int combo, int xp, Progressor progressor)
 	{
-		GD.Print($"Xp Gained: {xp}");
-		progressor.GainXP(xp);
+		progressor.GainXp(xp);
+		_turns++;
+		GD.Print($"Lv{progressor.CurrentLevel + 1}/{progressor.MaxLevel + 1}, " +
+		         $"Xp Gained: {xp} -> {progressor.Xp} / {progressor.GetCurrentLevelXpRequirement()}, " +
+		         $"turn {_turns}");
 	}
 
 	public void OnLeveledUp(int level, int xp)
 	{
 		GD.Print($"Leveled Up: {level}");
+	}
+
+	public void EndGame()
+	{
+		EmitSignal(nameof(GameEnded), _turns);
 	}
 }

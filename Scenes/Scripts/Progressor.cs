@@ -3,15 +3,15 @@ using System;
 
 public class Progressor : Node
 {
-    private int MaxLevel
+    public int MaxLevel
     {
         get => 
             (int)ProjectSettings.GetSetting("game/combo/max")
         -   (int)ProjectSettings.GetSetting("game/combo/starting_min");
     }
 
-    private int _currentLevel;
-    private float _xp;
+    public int CurrentLevel;
+    public int Xp;
     
     [Signal] public delegate void LeveledUp(int level, int xp);
     [Signal] public delegate void XpIncreased(int xp);
@@ -21,34 +21,40 @@ public class Progressor : Node
     {
         base._Ready();
 
-        _xp = 0;
-        _currentLevel = 0;
+        Xp = 0;
+        CurrentLevel = 0;
     }
 
-    public void GainXP(int xp)
+    public void GainXp(int xp)
     {
-        _xp += xp;
+        Xp += xp;
 
-        if (_xp < GetLevelXPRequirement(_currentLevel))
+        if (Xp < GetLevelXpRequirement(CurrentLevel))
         {
-            EmitSignal(nameof(XpIncreased), _xp);
+            EmitSignal(nameof(XpIncreased), Xp);
             return;
         }
         
-        _currentLevel++;
+        Xp -= GetLevelXpRequirement(CurrentLevel);
+        CurrentLevel++;
 
-        if (_currentLevel >= MaxLevel)
+        if (CurrentLevel >= MaxLevel)
         {
             EmitSignal(nameof(MaxLevelSurpassed));
             return;
         }
         
-        EmitSignal(nameof(LeveledUp), _currentLevel, _xp);
-        _xp -= GetLevelXPRequirement(_currentLevel);
+        EmitSignal(nameof(LeveledUp), CurrentLevel, Xp);
     }
 
-    private int GetLevelXPRequirement(int level)
+    public static int GetLevelXpRequirement(int level)
     {
-        return (int)Mathf.Pow(2, level + (int)ProjectSettings.GetSetting("game/combo/starting_min")) * 2;
+        return (int)(Mathf.Pow(2, level + (int)ProjectSettings.GetSetting("game/combo/starting_min") - 1)
+            * (float)ProjectSettings.GetSetting("game/combo/xp_requirement_scale"));
+    }
+
+    public int GetCurrentLevelXpRequirement()
+    {
+        return GetLevelXpRequirement(CurrentLevel);
     }
 }

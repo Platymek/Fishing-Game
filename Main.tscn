@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Game.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Main.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Results.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0 )
@@ -12,6 +14,12 @@ gradient = SubResource( 1 )
 [node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 2 )
+_initialState = 1
+_gameScene = ExtResource( 1 )
+_resultsScene = ExtResource( 3 )
+_gameContainer = NodePath("AspectRatioContainer/CenterContainer/VBoxContainer/GameContainer/Viewport")
+_menuContainer = NodePath("AspectRatioContainer/MenuContainer")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -47,9 +55,19 @@ handle_input_locally = false
 usage = 0
 render_target_update_mode = 3
 
-[node name="Game" parent="AspectRatioContainer/CenterContainer/VBoxContainer/GameContainer/Viewport" instance=ExtResource( 1 )]
-
 [node name="FooterContainer" type="VBoxContainer" parent="AspectRatioContainer/CenterContainer/VBoxContainer"]
 margin_top = 80.0
 margin_right = 192.0
 margin_bottom = 80.0
+
+[node name="MenuContainer" type="CenterContainer" parent="AspectRatioContainer"]
+margin_left = 28.0
+margin_right = 164.0
+margin_bottom = 108.0
+
+[node name="Results" parent="AspectRatioContainer/MenuContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 27.0
+margin_right = 136.0
+margin_bottom = 81.0
