@@ -1,0 +1,131 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Theme/theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scenes/Scripts/UiHeader.cs" type="Script" id=2]
+
+[node name="UiHeader" type="Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_right = 2.0
+margin_bottom = -2.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+_comboContainerPath = NodePath("Left/Combo")
+_comboBarPath = NodePath("Left/Combo/ProgressBar")
+_comboValuePath = NodePath("Left/Combo/ComboCount")
+_xpBarContainerPath = NodePath("Left/XP")
+_xpBarRemainingPath = NodePath("Left/XP/XpLeft")
+_xpBarPath = NodePath("Left/XP/ProgressBar")
+
+[node name="Left" type="HBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -7.0
+margin_right = 74.0
+margin_bottom = 2.0
+
+[node name="Combo" type="HBoxContainer" parent="Left"]
+visible = false
+margin_right = 93.0
+margin_bottom = 10.0
+
+[node name="Label" type="Label" parent="Left/Combo"]
+margin_right = 30.0
+margin_bottom = 10.0
+text = "Combo"
+valign = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Left/Combo"]
+margin_left = 31.0
+margin_right = 63.0
+margin_bottom = 7.0
+rect_min_size = Vector2( 32, 7 )
+theme = ExtResource( 1 )
+max_value = 1.0
+value = 0.75
+percent_visible = false
+
+[node name="ComboCount" type="Label" parent="Left/Combo"]
+margin_left = 64.0
+margin_right = 71.0
+margin_bottom = 9.0
+theme_type_variation = "BoxedLabel"
+text = "3"
+
+[node name="MaxLabel" type="Label" parent="Left/Combo"]
+margin_left = 72.0
+margin_top = 1.0
+margin_right = 88.0
+margin_bottom = 8.0
+theme_type_variation = "SmallLabel"
+text = "max:"
+
+[node name="Max" type="Label" parent="Left/Combo"]
+margin_left = 89.0
+margin_top = 1.0
+margin_right = 93.0
+margin_bottom = 8.0
+theme_type_variation = "SmallLabel"
+text = "3"
+
+[node name="XP" type="HBoxContainer" parent="Left"]
+visible = false
+margin_right = 74.0
+margin_bottom = 10.0
+
+[node name="XpLabel" type="Label" parent="Left/XP"]
+margin_right = 12.0
+margin_bottom = 10.0
+text = "XP"
+
+[node name="ProgressBar" type="ProgressBar" parent="Left/XP"]
+margin_left = 13.0
+margin_right = 45.0
+margin_bottom = 7.0
+rect_min_size = Vector2( 32, 7 )
+max_value = 1.0
+value = 0.75
+percent_visible = false
+
+[node name="XpLeft" type="Label" parent="Left/XP"]
+margin_left = 46.0
+margin_top = 1.0
+margin_right = 50.0
+margin_bottom = 8.0
+theme_type_variation = "SmallLabel"
+text = "0"
+
+[node name="XpLeftLabel" type="Label" parent="Left/XP"]
+margin_left = 51.0
+margin_top = 1.0
+margin_right = 74.0
+margin_bottom = 8.0
+theme_type_variation = "SmallLabel"
+text = "xp left"
+
+[node name="LevelUpMessage" type="Label" parent="Left"]
+visible = false
+margin_left = 89.0
+margin_right = 146.0
+margin_bottom = 10.0
+text = "Leveled Up!"
+
+[node name="XpBonusMessage" type="HBoxContainer" parent="Left"]
+visible = false
+margin_left = 147.0
+margin_right = 211.0
+margin_bottom = 10.0
+
+[node name="Xp" type="Label" parent="Left/XpBonusMessage"]
+margin_right = 12.0
+margin_bottom = 10.0
+text = "34"
+
+[node name="Label" type="Label" parent="Left/XpBonusMessage"]
+margin_left = 13.0
+margin_right = 64.0
+margin_bottom = 10.0
+text = "XP Gained!"

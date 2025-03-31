@@ -9,7 +9,7 @@ public class ComboManager : Node
     [Signal] public delegate void ComboEnded(int combo, int xp);
     [Signal] public delegate void ComboSucceeded(int combo, int xp);
     [Signal] public delegate void ComboFailed(int combo, int xp);
-    [Signal] public delegate void TimerDecreased(float time);
+    [Signal] public delegate void TimerDecreased(float progress);
     
     private float DrainDuration { get => (float)ProjectSettings.GetSetting("game/combo/drain_duration"); }
     

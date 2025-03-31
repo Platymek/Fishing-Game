@@ -16,11 +16,10 @@ public class Game : Node2D
 	private ComboManager _comboManager;
 	private int _turns;
 
-	public override void _Ready()
+	public void Initialise(UiHeader uiHeader)
 	{
-		base._Ready();
-
 		GD.Randomize();
+		
 		
 		var comboManager = CreateComboManager();
 		var spawner		 = CreateSpawner();
@@ -28,6 +27,9 @@ public class Game : Node2D
 		CreateSpawnTimer(spawner);
 
 		_turns = 0;
+		
+		
+		uiHeader.Initialise(comboManager, progressor);
 	}
 
 	private void CreateSpawnTimer(Spawner spawner)

@@ -38,18 +38,19 @@ game/fish_speed=14.0
 game/hazard_speed=6.0
 game/spawn_rate=2.0
 combo/minimum=3
-combo/drain_duration=1.5
+combo/drain_duration=1.0
 combo/xp_scale=2
 combo/starting_min=3
-combo/max=4
+combo/max=10
 combo/initial_xp_requirement=8
 game/positive_to_negative_ratio=3
 game/max_level=10
-combo/xp_requirement_scale=0.5
+combo/xp_requirement_scale=0.75
 
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+theme/custom="res://Theme/theme.tres"
 
 [input]
 

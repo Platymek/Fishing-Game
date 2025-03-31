@@ -5,10 +5,17 @@ using Array = Godot.Collections.Array;
 public class Main : Control
 {
     [Export] private States _initialState;
+    
     [Export] private PackedScene _gameScene;
     [Export] private PackedScene _resultsScene;
+    [Export] private PackedScene _uiHeaderScene;
+    [Export] private PackedScene _uiFooterScene;
+    
     [Export] private NodePath _gameContainer;
     [Export] private NodePath _menuContainer;
+    [Export] private NodePath _uiHeaderContainer;
+    [Export] private NodePath _uiFooterContainer;
+    
     
     enum States
     {
@@ -52,8 +59,13 @@ public class Main : Control
     void SetStateToGame()
     {
         State = States.Game;
-        
-        
+
+        var uiHeader = CreateUiHeader();
+        var game = CreateGame(uiHeader);
+    }
+
+    Game CreateGame(UiHeader uiHeader)
+    {
         var game = _gameScene.Instance<Game>();
         
         game.Name = "Game";
@@ -64,6 +76,20 @@ public class Main : Control
             this, 
             nameof(SetStateToResults),
             flags: (uint)ConnectFlags.Deferred);
+        
+        
+        game.Initialise(uiHeader);
+        return game;
+    }
+
+    UiHeader CreateUiHeader()
+    {
+        var uiHeader = _uiHeaderScene.Instance<UiHeader>();
+        
+        uiHeader.Name = "UiHeader";
+        GetNode(_uiHeaderContainer).AddChild(uiHeader);
+        
+        return uiHeader;
     }
 
     void SetStateToResults(int turns)
