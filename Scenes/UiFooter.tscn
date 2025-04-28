@@ -1,13 +1,18 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Scripts/UiFooter.cs" type="Script" id=1]
 
 [node name="UiFooter" type="Control"]
 anchor_right = 1.0
 margin_left = 2.0
 margin_right = 2.0
+script = ExtResource( 1 )
+_levelPath = NodePath("Left/Level")
+_turnPath = NodePath("Right/Turn")
 
 [node name="Left" type="HBoxContainer" parent="."]
-anchor_right = 1.0
-margin_bottom = 5.0
+margin_right = 192.0
+margin_bottom = 7.0
 
 [node name="LevelLabel" type="Label" parent="Left"]
 margin_right = 17.0
@@ -20,18 +25,26 @@ margin_left = 18.0
 margin_right = 22.0
 margin_bottom = 7.0
 theme_type_variation = "SmallLabel"
-text = "2"
+text = "1"
 
-[node name="MaxComboLabel" type="Label" parent="Left"]
-margin_left = 23.0
-margin_right = 69.0
+[node name="Right" type="HBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -192.0
+margin_right = -4.0
+margin_bottom = 7.0
+alignment = 2
+
+[node name="TurnLabel" type="Label" parent="Right"]
+margin_left = 168.0
+margin_right = 183.0
 margin_bottom = 7.0
 theme_type_variation = "SmallLabel"
-text = ", Max Combo:"
+text = "Turn"
 
-[node name="MaxCombo" type="Label" parent="Left"]
-margin_left = 70.0
-margin_right = 74.0
+[node name="Turn" type="Label" parent="Right"]
+margin_left = 184.0
+margin_right = 188.0
 margin_bottom = 7.0
 theme_type_variation = "SmallLabel"
-text = "3"
+text = "1"

@@ -32,7 +32,7 @@ public class Main : Control
         {
             switch (_state)
             {
-                case States.Game: DestroyGame(); break;
+                case States.Game:    DestroyGame();    break;
                 case States.Results: DestroyResults(); break;
             }
             
@@ -61,10 +61,11 @@ public class Main : Control
         State = States.Game;
 
         var uiHeader = CreateUiHeader();
-        var game = CreateGame(uiHeader);
+        var uiFooter = CreateUiFooter();
+        var game = CreateGame(uiHeader, uiFooter);
     }
 
-    Game CreateGame(UiHeader uiHeader)
+    Game CreateGame(UiHeader uiHeader, UiFooter uiFooter)
     {
         var game = _gameScene.Instance<Game>();
         
@@ -78,7 +79,7 @@ public class Main : Control
             flags: (uint)ConnectFlags.Deferred);
         
         
-        game.Initialise(uiHeader);
+        game.Initialise(uiHeader, uiFooter);
         return game;
     }
 
@@ -90,6 +91,16 @@ public class Main : Control
         GetNode(_uiHeaderContainer).AddChild(uiHeader);
         
         return uiHeader;
+    }
+
+    UiFooter CreateUiFooter()
+    {
+        var uiFooter = _uiFooterScene.Instance<UiFooter>();
+        
+        uiFooter.Name = "UiFooter";
+        GetNode(_uiFooterContainer).AddChild(uiFooter);
+        
+        return uiFooter;
     }
 
     void SetStateToResults(int turns)
@@ -114,6 +125,18 @@ public class Main : Control
     {
         foreach (Node child 
         in GetNode(_gameContainer).GetChildren())
+        {
+            child.QueueFree();
+        }
+        
+        foreach (Node child
+                 in GetNode(_uiHeaderContainer).GetChildren())
+        {
+            child.QueueFree();
+        }
+        
+        foreach (Node child
+                 in GetNode(_uiFooterContainer).GetChildren())
         {
             child.QueueFree();
         }

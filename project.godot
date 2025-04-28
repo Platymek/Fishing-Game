@@ -30,22 +30,22 @@ window/stretch/aspect="expand"
 [game]
 
 player/movement_speed=80.0
-player/catch_duration=0.4
+player/catch_duration=0.3
 player/catch_width=8.0
-player/catch_buffer=0.4
+player/catch_buffer=0.25
 game/spawn_side_count=3
-game/fish_speed=14.0
+game/fish_speed=20.0
 game/hazard_speed=6.0
-game/spawn_rate=2.0
+game/spawn_rate=1.5
 combo/minimum=3
-combo/drain_duration=1.0
+combo/drain_duration=1.5
 combo/xp_scale=2
 combo/starting_min=3
 combo/max=10
 combo/initial_xp_requirement=8
-game/positive_to_negative_ratio=3
-game/max_level=10
-combo/xp_requirement_scale=0.75
+game/positive_to_negative_ratio=4
+game/max_level=3
+combo/xp_requirement_scale=0.5
 
 [gui]
 

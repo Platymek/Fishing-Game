@@ -15,6 +15,11 @@ script = ExtResource( 2 )
 _comboContainerPath = NodePath("Left/Combo")
 _comboBarPath = NodePath("Left/Combo/ProgressBar")
 _comboValuePath = NodePath("Left/Combo/ComboCount")
+_comboMaxLabelPath = NodePath("Left/Combo/Max")
+_xpMessagePath = NodePath("Left/XpBonusMessage")
+_xpMessageLabelPath = NodePath("Left/XpBonusMessage/Xp")
+_levelUpMessagePath = NodePath("Left/LevelUpMessage")
+_maxLevelMessagePath = NodePath("Left/MaxLevelMessage")
 _xpBarContainerPath = NodePath("Left/XP")
 _xpBarRemainingPath = NodePath("Left/XP/XpLeft")
 _xpBarPath = NodePath("Left/XP/ProgressBar")
@@ -45,7 +50,10 @@ margin_bottom = 7.0
 rect_min_size = Vector2( 32, 7 )
 theme = ExtResource( 1 )
 max_value = 1.0
-value = 0.75
+step = 0.001
+value = 0.502
+allow_greater = true
+allow_lesser = true
 percent_visible = false
 
 [node name="ComboCount" type="Label" parent="Left/Combo"]
@@ -112,6 +120,12 @@ margin_left = 89.0
 margin_right = 146.0
 margin_bottom = 10.0
 text = "Leveled Up!"
+
+[node name="MaxLevelMessage" type="Label" parent="Left"]
+visible = false
+margin_right = 98.0
+margin_bottom = 10.0
+text = "Max Level Reached!"
 
 [node name="XpBonusMessage" type="HBoxContainer" parent="Left"]
 visible = false

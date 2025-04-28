@@ -11,7 +11,7 @@ public class ComboManager : Node
     [Signal] public delegate void ComboFailed(int combo, int xp);
     [Signal] public delegate void TimerDecreased(float progress);
     
-    private float DrainDuration { get => (float)ProjectSettings.GetSetting("game/combo/drain_duration"); }
+    private static float DrainDuration { get => (float)ProjectSettings.GetSetting("game/combo/drain_duration"); }
     
     private int _combo = 0;
     private int _limit = 3;
@@ -37,7 +37,6 @@ public class ComboManager : Node
         if (!_drainer.IsStopped())
         {
             EmitSignal(nameof(TimerDecreased), _drainer.TimeLeft);
-            GD.Print($"TimeLeft: {_drainer.TimeLeft}");
         }
     }
 
@@ -81,7 +80,7 @@ public class ComboManager : Node
         _combo = 0;
     }
 
-    public void SetLimit(int limit, int xp)
+    public void SetLimit(int limit, int xp, int bonusXp)
     {
         _limit = limit + (int)ProjectSettings.GetSetting("game/combo/starting_min");
     }

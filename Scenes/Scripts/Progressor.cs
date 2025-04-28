@@ -13,8 +13,8 @@ public class Progressor : Node
     public int CurrentLevel;
     public int Xp;
     
-    [Signal] public delegate void LeveledUp(int level, int xp);
-    [Signal] public delegate void XpIncreased(int xp);
+    [Signal] public delegate void LeveledUp(int level, int xp, int xpBonus);
+    [Signal] public delegate void XpIncreased(int xp, int xpBonus);
     [Signal] public delegate void MaxLevelSurpassed();
 
     public override void _Ready()
@@ -27,11 +27,13 @@ public class Progressor : Node
 
     public void GainXp(int xp)
     {
+        if (xp == 0) return;
+        
         Xp += xp;
 
         if (Xp < GetLevelXpRequirement(CurrentLevel))
         {
-            EmitSignal(nameof(XpIncreased), Xp);
+            EmitSignal(nameof(XpIncreased), Xp, xp);
             return;
         }
         
@@ -44,7 +46,7 @@ public class Progressor : Node
             return;
         }
         
-        EmitSignal(nameof(LeveledUp), CurrentLevel, Xp);
+        EmitSignal(nameof(LeveledUp), CurrentLevel, Xp, xp);
     }
 
     public static int GetLevelXpRequirement(int level)

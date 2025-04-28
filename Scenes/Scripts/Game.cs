@@ -13,10 +13,12 @@ public class Game : Node2D
 	[Export] private NodePath _rightSpawn;
 	[Export] private NodePath _catchablesNode;
 
+	[Signal] public delegate void TurnsIncreased(int turns);
+	
 	private ComboManager _comboManager;
 	private int _turns;
 
-	public void Initialise(UiHeader uiHeader)
+	public void Initialise(UiHeader uiHeader, UiFooter uiFooter)
 	{
 		GD.Randomize();
 		
@@ -30,6 +32,9 @@ public class Game : Node2D
 		
 		
 		uiHeader.Initialise(comboManager, progressor);
+		uiHeader.Connect(nameof(UiHeader.MaxLevelMessageFinished), this, nameof(EndGame));
+		
+		uiFooter.Initialise(progressor, this);
 	}
 
 	private void CreateSpawnTimer(Spawner spawner)
@@ -70,8 +75,6 @@ public class Game : Node2D
 		AddChild(progressor);
 
 		progressor.Connect(nameof(Progressor.LeveledUp), comboManager, nameof(comboManager.SetLimit));
-		progressor.Connect(nameof(Progressor.LeveledUp), this, nameof(OnLeveledUp));
-		progressor.Connect(nameof(Progressor.MaxLevelSurpassed), this, nameof(EndGame));
 		
 		comboManager.Connect(nameof(ComboManager.ComboEnded), this, nameof(OnXpGained), 
 			new Array { progressor });
@@ -88,14 +91,12 @@ public class Game : Node2D
 	{
 		progressor.GainXp(xp);
 		_turns++;
+		
+		EmitSignal(nameof(TurnsIncreased), _turns);
+		
 		GD.Print($"Lv{progressor.CurrentLevel + 1}/{progressor.MaxLevel + 1}, " +
 		         $"Xp Gained: {xp} -> {progressor.Xp} / {progressor.GetCurrentLevelXpRequirement()}, " +
 		         $"turn {_turns}");
-	}
-
-	public void OnLeveledUp(int level, int xp)
-	{
-		GD.Print($"Leveled Up: {level}");
 	}
 
 	public void EndGame()
